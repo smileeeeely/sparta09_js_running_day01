@@ -16,21 +16,26 @@ Repository를 fork 하여 본인의 repository로 옮긴 후,
 
 ```javascript
 1. let uninitialized;
-console.log(uninitialized); // 결과값 < 빈칸 >
+console.log(uninitialized); // undefined 초기화 시키지 않았기 때문에 컴퓨터가 지정하는 빈 값인 undefined가 출력 될 것
 
 
-2. < 빈칸 > apple = "사과";
+2. < const > apple = "사과";
 apple = "바나나"; // TypeError: Assignment to constant variable
+//이미 사과로 할당된 const에 바나나로 다시 재할당하려고 해서 생기는 에러
 
 
 3. let lotto = [3, 8, 13, 19, 21, 32];
-console.log(lotto[3]); // 결과값 < 빈칸 >
+console.log(lotto[3]); // 결과값 < 19 >
+// 배열의 인덱스는 0부터 시작
 
 
 4.
 let mySchedule = "";
-console.log(mySchedule || false); // < 빈칸 >
-console.log(!!mySchedule); // < 빈칸 >
+console.log(mySchedule || false); // < false >
+console.log(!!mySchedule); // <false>
+// mySchedule이 false일경우 false를 출력해
+// mySchedule을 불리언 값으로 바꿨을 때 ""는 false
+
 
 ```
 
@@ -48,12 +53,14 @@ console.log(!!mySchedule); // < 빈칸 >
 
 ```javascript
 const junhyun = {
-    // 조건을 충족하는 코드 작성
+    name: '이민주',
+    age: '27',
+    MBTI: 'ENTP'
 };
 
-console.log(이름이 나오게 콘솔을 실행시켜 주세요.);
-console.log(나이가 나오게 콘솔을 실행시켜 주세요.);
-console.log(MBTI가 나오게 콘솔을 실행시켜 주세요.);
+console.log(junhyun.name);
+console.log(junhyun.age);
+console.log(`${junhyun.MBTI}`);
 ```
 
 &nbsp;
@@ -65,12 +72,15 @@ console.log(MBTI가 나오게 콘솔을 실행시켜 주세요.);
 예시
 
 ```javascript
-function 함수명(매개변수) {
-  // 코드를 작성해 주세요.
+function IsItOdd(x) {
+  if(x % 2 == 0){
+    return "짝수";
+  }
+  return "홀수";
 }
 
-console.log(함수명(10)); // 결과값 "짝수";
-console.log(함수명(7)); // 결과값 "홀수";
+console.log(IsItOdd(10)); // 결과값 "짝수";
+console.log(IsItOdd(7)); // 결과값 "홀수";
 ```
 
 &nbsp;
@@ -83,14 +93,23 @@ console.log(함수명(7)); // 결과값 "홀수";
 예시
 
 ```javascript
-function 함수명(매개변수1, 매개변수2, 매개변수3) {
-  // 코드를 작성해주세요.
+function calculator(a, b, c) {
+  if(b === '+'){
+    return (a + c);
+  }else if(b === '-'){
+    return (a - c);
+  }else if(b === '*'){
+    return (a * c);
+  }else if(b === '/'){
+    return (a / c);
+  }
+  
 }
 
-함수명(3, "+", 6); // 결과값 9
-함수명(11, "-", 6); // 결과값 5
-함수명(6, "*", 3); // 결과값 18
-함수명(15, "/", 3); // 결과값 5
+calculator(3, "+", 6); // 결과값 9
+calculator(11, "-", 6); // 결과값 5
+calculator(6, "*", 3); // 결과값 18
+calculator(15, "/", 3); // 결과값 5
 ```
 
 &nbsp;
@@ -106,11 +125,13 @@ scores에 있는 학생들의 점수를 반복문을 통해 3점씩 올리게 �
 ```javascript
 const scores = [36, 62, 72, 55, 86, 95, 92, 48, 81];
 
-function 함수명(scores) {
-  // 4번 문제의 계산기 함수를 활용한 코드를 작성해주세요.
+function raiseScore(scores) {
+  for(let i=0; i<scores.length; i++){
+    scores[i] = calculator(scores[i], '+', 3);
+  }
 }
 
-함수명(scores);
+raiseScore(scores);
 
 console.log(scores);
 // 기대값: [39, 65, 75, 58, 89, 98, 95, 51, 84]
@@ -147,7 +168,10 @@ applyCoupon(userBCart, coupon);
 ```
 
 1.	실행 결과로 userACart.items와 userBCart.items는 각각 어떻게 달라져 있을까요?
+둘다 5000원씩 할인된 가격이다
 
 2.	1번의 결과에 대한 이유를 설명해보세요.
+userBCart = userACart하면 주소값이 복사되어 같은 곳을 참조하기 때문
 
 3.	원래 의도대로라면 유저 A와 유저 B 장바구니가 독립적으로 동작해야 하는데, 그렇게 하려면 코드를 어떻게 수정해야 할까요?
+주소값을 복사하는 것이 아닌 안의 값을 순회하면서 하나씩 넣어줘야 한다.
